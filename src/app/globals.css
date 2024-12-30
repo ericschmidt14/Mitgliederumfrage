@@ -2,20 +2,129 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@font-face {
+  font-family: "Glober Regular";
+  src: url(/fonts/glober-regular.woff) format("woff2");
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@font-face {
+  font-family: "Glober ExtraBold";
+  src: url(/fonts/glober-extrabold.woff) format("woff2");
+}
+
+@font-face {
+  font-family: "Knile SemiBold Italic";
+  src: url(/fonts/knile-semibolditalic.woff) format("woff2");
+}
+
+:root {
+  --foreground: var(--mantine-color-white);
+  --background: var(--mantine-color-black);
+  --transition: 300ms all ease-in-out;
+}
+
+h1,
+h2,
+h3,
+h4,
+b {
+  font-family: "Glober ExtraBold";
+}
+
+i {
+  font-style: normal;
+  font-family: "Knile SemiBold Italic";
 }
 
 body {
   color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--background);
+}
+
+h1 {
+  font-size: 72px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+h2 {
+  font-size: 32px;
+  font-weight: bold;
+  letter-spacing: -4%;
+}
+
+h3 {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+p {
+  font-size: 14px;
+}
+
+a:not(.logo):not(.mantine-Button-root),
+.link {
+  font-size: 14px;
+  color: var(--mantine-color-dimmed);
+  transition: var(--transition);
+}
+
+a:not(.logo):not(.mantine-Button-root):hover,
+.link:hover {
+  color: var(--mantine-color-anchor);
+  cursor: pointer;
+}
+
+.small,
+article.small p {
+  font-size: var(
+    --input-description-size,
+    calc(var(--mantine-font-size-sm) - calc(0.125rem * var(--mantine-scale)))
+  );
+  line-height: 1.4;
+}
+
+article.small p {
+  margin-block-end: calc(0.4rem * var(--mantine-scale));
+}
+
+article.small h4 {
+  font-weight: bold;
+  margin-block-end: calc(0.4rem * var(--mantine-scale));
+}
+
+article.small li {
+  list-style-type: disc;
+  margin-left: 1rem;
+  margin-block-end: calc(0.4rem * var(--mantine-scale));
+}
+
+.muted {
+  color: var(--mantine-color-dimmed);
+}
+
+.responsive-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.responsive-table td {
+  text-align: left;
+}
+
+@media (max-width: 640px) {
+  h3 {
+    font-size: 14px;
+  }
+
+  .responsive-table tr {
+    display: block;
+    padding: 0.6rem 0rem;
+  }
+
+  .responsive-table td {
+    display: block;
+    position: relative;
+    padding: 0rem 0.4rem;
+  }
 }
