@@ -18,8 +18,8 @@ export default function Page() {
         p="xl"
         radius="md"
         w="666"
+        bg="rgba(0, 0, 0, 0.5)"
         className="flex flex-col items-start gap-8"
-        withBorder
       >
         <header className="w-full flex justify-between items-center pb-4">
           <div className="flex justify-center items-center gap-1 ">

@@ -44,7 +44,7 @@ export default function RootLayout({
       <body>
         <MantineProvider theme={theme} defaultColorScheme="dark">
           <Suspense>
-            <main className="min-h-screen flex flex-col justify-between">
+            <main className="min-h-screen flex flex-col justify-between bg-[length:300%_300%] bg-gradient-to-r from-[#b3193e] via-[#aa1124] via-30% to-[#220407] bg-right">
               <div className="flex flex-col justify-between">{children}</div>
               <Footer />
             </main>
