@@ -11,13 +11,14 @@ export default function Page() {
 
   const [digitalId, setDigitalId] = useState(false);
   const [invitation, setInvitation] = useState(false);
+  const [digitalMagazin, setDigitalMagazin] = useState(false);
 
   return (
     <div className="flex justify-center items-center p-8">
       <Paper
         p="xl"
         radius="md"
-        w="666"
+        w="680"
         bg="rgba(0, 0, 0, 0.5)"
         className="flex flex-col items-start gap-8"
       >
@@ -55,6 +56,13 @@ export default function Page() {
             checked={invitation}
             onChange={(e) => setInvitation(e.currentTarget.checked)}
           />
+          <Checkbox
+            label="Ich möchte das Mitgliedermagazin digital erhalten."
+            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce rhoncus, ligula at fermentum egestas, sapien sem placerat tellus, et tristique lacus mauris in purus. Donec ac eros sodales nibh dapibus semper. Aliquam vulputate massa ut metus dapibus ullamcorper. Nunc sed volutpat ex. Aenean et nisl pretium magna auctor porta in ac quam."
+            size="lg"
+            checked={digitalMagazin}
+            onChange={(e) => setDigitalMagazin(e.currentTarget.checked)}
+          />
         </form>
         <p className="small">
           Ich bin damit einverstanden, dass der 1. Fußball-Club Nürnberg e.V.
@@ -64,10 +72,11 @@ export default function Page() {
         </p>
         <Button
           type="submit"
+          size="md"
           fullWidth
-          leftSection={<IconDeviceFloppy size={16} />}
+          leftSection={<IconDeviceFloppy size={20} />}
         >
-          Speichern
+          Meine Auswahl speichern
         </Button>
       </Paper>
     </div>
