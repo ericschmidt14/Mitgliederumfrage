@@ -68,6 +68,16 @@ export default function Page() {
       });
   };
 
+  const contact = () => {
+    return (
+      <p>
+        Bitte klicke den Link in der E-Mail erneut. Sollte der Fehler weiterhin
+        bestehen bleiben, kontaktiere{" "}
+        <a href="mitglied@fcn.de">mitglied@fcn.de</a>.
+      </p>
+    );
+  };
+
   const renderContent = () => {
     switch (status) {
       case "loading":
@@ -76,6 +86,7 @@ export default function Page() {
             <IconLoader2 size={48} className="animate-spin" />
           </div>
         );
+
       case "error":
         return (
           <>
@@ -83,13 +94,10 @@ export default function Page() {
               Ein Fehler ist aufgetreten:{" "}
               <b>{token ? "Ungültiges Token" : "Kein Token vorhanden"}.</b>
             </p>
-            <p>
-              Bitte klicke den Link in der E-Mail erneut. Sollte der Fehler
-              weiterhin bestehen bleiben, kontaktiere{" "}
-              <a href="mitglied@fcn.de">mitglied@fcn.de</a>.
-            </p>
+            {contact()}
           </>
         );
+
       case "alreadyAnswered":
         return (
           <>
@@ -99,6 +107,7 @@ export default function Page() {
             </p>
           </>
         );
+
       case "success":
         return (
           <>
@@ -108,6 +117,7 @@ export default function Page() {
             </p>
           </>
         );
+
       case "notFound":
         return (
           <>
@@ -117,13 +127,10 @@ export default function Page() {
                 Dem angegebenen Token konnte kein Mitglied zugeordnet werden.
               </b>
             </p>
-            <p>
-              Bitte klicke den Link in der E-Mail erneut. Sollte der Fehler
-              weiterhin bestehen bleiben, kontaktiere{" "}
-              <a href="mitglied@fcn.de">mitglied@fcn.de</a>.
-            </p>
+            {contact()}
           </>
         );
+
       default:
         return (
           <>
@@ -178,7 +185,7 @@ export default function Page() {
       <Paper
         p="xl"
         radius="md"
-        w="680"
+        w="720"
         bg="rgba(0, 0, 0, 0.5)"
         className="flex flex-col items-start gap-8"
       >
