@@ -10,7 +10,6 @@ export default function Page() {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
 
-  const [loading, setLoading] = useState(true);
   const [status, setStatus] = useState("loading");
   const [id, setId] = useState(false);
   const [invitation, setInvitation] = useState(false);
@@ -29,12 +28,10 @@ export default function Page() {
         } else {
           setStatus("unknown");
         }
-        setLoading(false);
       })
       .catch((error) => {
         console.error(error);
         setStatus("error");
-        setLoading(false);
       });
   }, [token]);
 
@@ -72,15 +69,13 @@ export default function Page() {
   };
 
   const renderContent = () => {
-    if (loading) {
-      return (
-        <div className="w-full flex justify-center">
-          <IconLoader2 size={48} className="animate-spin" />
-        </div>
-      );
-    }
-
     switch (status) {
+      case "loading":
+        return (
+          <div className="w-full flex justify-center">
+            <IconLoader2 size={48} className="animate-spin" />
+          </div>
+        );
       case "error":
         return (
           <>
