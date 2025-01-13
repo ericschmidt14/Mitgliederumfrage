@@ -15,6 +15,7 @@ export default function Footer() {
           </a>
         </nav>
       </div>
+      <a href="mailto:mitglied@fcn.de">mitglied@fcn.de</a>
     </footer>
   );
 }
