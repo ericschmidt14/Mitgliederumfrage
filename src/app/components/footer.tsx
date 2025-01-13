@@ -8,7 +8,7 @@ export default function Footer() {
             Impressum
           </a>
           <a
-            href="https://www.fcn.de/standards/datenschutzerklaerung/"
+            href="https://www.fcn.de/fans-mitgliedschaft/mitgliedschaft/datenschutz/"
             target="_blank"
           >
             Datenschutz

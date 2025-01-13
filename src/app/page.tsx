@@ -142,18 +142,21 @@ export default function Page() {
             >
               <Checkbox
                 label="Ich möchte den Mitgliedsausweis digital erhalten."
+                description="Wenn Du diesen Haken setzt, wird dir der digitale Mitgliedsausweis als Link per E-Mail zugeschickt. Diesen kannst Du anschließend mit nur einem Klick in deiner Mobile-Wallet speichern. Somit hast Du Deinen Mitgliedsausweis auf deinem Smartphone immer griffbereit. In diesem Fall erhältst Du keinen gedruckten Mitgliedsausweis."
                 size="lg"
                 checked={id}
                 onChange={(e) => setId(e.currentTarget.checked)}
               />
               <Checkbox
                 label="Ich möchte die Einladung zur Jahreshauptversammlung digital erhalten."
+                description="Wenn Du diesen Haken setzt, wird Dir die Einladung zu der jährlichen Jahreshauptversammlung inklusive Tagesordnung in Zukunft digital zugesendet. Eine postalische Einladung erfolgt nicht mehr."
                 size="lg"
                 checked={invitation}
                 onChange={(e) => setInvitation(e.currentTarget.checked)}
               />
               <Checkbox
                 label="Ich möchte das Mitgliedermagazin digital erhalten."
+                description="Das Mitgliedermagazin gibt es schon seit ein paar Jahren als digitale Version, rund 60% unserer Mitglieder nutzen dies bereits. Wenn Du das Magazin schon digital erhältst, musst Du hier nichts weiter ankreuzen. Solltest Du das Mitgliedermagazin noch gedruckt erhalten, und möchtest auf die digitale Version umsteigen, dann setze hier den Haken."
                 size="lg"
                 checked={magazin}
                 onChange={(e) => setMagazin(e.currentTarget.checked)}
