@@ -4,7 +4,7 @@ import { IconDeviceFloppy, IconLoader2 } from "@tabler/icons-react";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { SURVEY } from "./constants";
+import { SURVEY } from "./lib/constants";
 
 export default function Page() {
   const searchParams = useSearchParams();

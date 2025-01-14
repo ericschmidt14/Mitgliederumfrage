@@ -1,4 +1,4 @@
-import { FCN_WEB_API } from "@/app/constants";
+import { FCN_WEB_API } from "@/app/lib/constants";
 import { NextResponse } from "next/server";
 
 export async function GET(
