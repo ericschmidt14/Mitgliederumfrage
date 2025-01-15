@@ -111,7 +111,7 @@ export default function Page() {
                 <h3>{s.name}</h3>
                 <p className="flex items-center gap-1 muted">
                   <div
-                    className="w-2 h-2 rounded-full"
+                    className="w-3 h-3 rounded-full"
                     style={{ background: "var(--mantine-color-red-6)" }}
                   />
                   {s.amount} von {results.length}
@@ -123,12 +123,11 @@ export default function Page() {
                   {
                     name: "Nein",
                     value: results.length - s.amount,
-                    color: "dark.9",
+                    color: "dark.6",
                   },
                 ]}
-                size={96}
-                paddingAngle={8}
-                withTooltip={false}
+                size={80}
+                paddingAngle={2}
               />
             </div>
           ))}
