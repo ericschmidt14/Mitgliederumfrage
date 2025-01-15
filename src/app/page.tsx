@@ -1,9 +1,9 @@
 "use client";
 import { Button, Checkbox, Paper } from "@mantine/core";
 import { IconDeviceFloppy, IconLoader2 } from "@tabler/icons-react";
-import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import Logo from "./components/logo";
 import { SURVEY } from "./lib/constants";
 
 export default function Page() {
@@ -193,13 +193,7 @@ export default function Page() {
         className="flex flex-col items-start gap-8"
       >
         <header className="w-full flex justify-between items-center pb-4">
-          <div className="flex justify-center items-center gap-1 ">
-            <Image src="/logo.svg" alt="1. FCN Logo" width={48} height={48} />
-            <p className="text-2xl">
-              <b>Mitglieder</b>
-              <i>umfrage</i>
-            </p>
-          </div>
+          <Logo />
           <p className="small muted">{SURVEY}</p>
         </header>
         {renderContent()}
