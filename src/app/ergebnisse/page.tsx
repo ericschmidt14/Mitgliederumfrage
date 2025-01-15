@@ -51,11 +51,15 @@ export default function Page() {
   const filteredResults =
     results &&
     results
-      .filter((r) =>
-        [r.Vorname, r.Nachname, r.MitgliedID.toString(), r.Email].some(
-          (value) => value.toLowerCase().includes(search.toLowerCase())
-        )
-      )
+      .filter((r) => {
+        const keywords = search.toLowerCase().split(" ");
+
+        return keywords.every((keyword) =>
+          [r.Vorname, r.Nachname, r.MitgliedID.toString(), r.Email].some(
+            (value) => value.toLowerCase().includes(keyword)
+          )
+        );
+      })
       .reverse();
 
   const rows = filteredResults.map((r) => {
