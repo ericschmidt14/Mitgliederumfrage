@@ -1,3 +1,4 @@
+import "@mantine/charts/styles.css";
 import { ColorSchemeScript, MantineProvider, createTheme } from "@mantine/core";
 import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css";

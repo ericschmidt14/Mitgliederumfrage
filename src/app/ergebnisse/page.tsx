@@ -1,4 +1,5 @@
 "use client";
+import { DonutChart } from "@mantine/charts";
 import { Checkbox, Paper, Table, TextInput } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
 import { useSession } from "next-auth/react";
@@ -32,6 +33,21 @@ export default function Page() {
     return <Login />;
   }
 
+  const stats = [
+    {
+      name: "Ausweis",
+      amount: results.filter((r) => r.survey.ausweis).length,
+    },
+    {
+      name: "JHV",
+      amount: results.filter((r) => r.survey.jhv).length,
+    },
+    {
+      name: "Magazin",
+      amount: results.filter((r) => r.survey.magazin).length,
+    },
+  ];
+
   const filteredResults =
     results &&
     results
@@ -61,7 +77,7 @@ export default function Page() {
   });
 
   const table = (
-    <Table className="mt-8">
+    <Table>
       <Table.Thead>
         <Table.Tr>
           <Table.Th>Nr</Table.Th>
@@ -80,14 +96,55 @@ export default function Page() {
   return (
     <>
       <Header />
-      <Paper className="relative m-8 p-4" radius="md" bg="rgba(0, 0, 0, 0.5)">
+      <Paper
+        className="relative m-8 p-4 flex flex-col gap-4"
+        radius="md"
+        bg="rgba(0, 0, 0, 0.5)"
+      >
+        <div className="grid grid-cols-3 gap-4">
+          {stats.map((s, i) => (
+            <div
+              key={i}
+              className="flex justify-between items-end gap-2 px-4 py-2 bg-black/50 rounded-md"
+            >
+              <div>
+                <h3>{s.name}</h3>
+                <p className="flex items-center gap-1 muted">
+                  <div
+                    className="w-2 h-2 rounded-full"
+                    style={{ background: "var(--mantine-color-red-6)" }}
+                  />
+                  {s.amount} von {results.length}
+                </p>
+              </div>
+              <DonutChart
+                data={[
+                  { name: "Ja", value: s.amount, color: "red.6" },
+                  {
+                    name: "Nein",
+                    value: results.length - s.amount,
+                    color: "dark.9",
+                  },
+                ]}
+                size={96}
+                paddingAngle={8}
+                withTooltip={false}
+              />
+            </div>
+          ))}
+        </div>
         <TextInput
-          className="col-span-3"
           placeholder="Suchen ..."
           leftSection={<IconSearch size={16} />}
           rightSection={<p>{filteredResults.length}</p>}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
+          styles={{
+            input: {
+              background: "rgba(0,0,0,0.5)",
+              border: "1px solid rgb(66, 66, 66)",
+            },
+          }}
         />
         {table}
       </Paper>
