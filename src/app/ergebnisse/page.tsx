@@ -123,11 +123,11 @@ export default function Page() {
                   {
                     name: "Nein",
                     value: results.length - s.amount,
-                    color: "dark.6",
+                    color: "dark.9",
                   },
                 ]}
-                size={80}
-                paddingAngle={2}
+                size={96}
+                paddingAngle={4}
               />
             </div>
           ))}
