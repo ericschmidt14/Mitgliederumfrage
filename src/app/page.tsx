@@ -203,11 +203,10 @@ export default function Page() {
   return (
     <div className="flex justify-center items-center py-16 px-4">
       <Paper
-        p="xl"
         radius="md"
         w="720"
         bg="rgba(0, 0, 0, 0.5)"
-        className="flex flex-col items-start gap-8"
+        className="flex flex-col items-start gap-8 px-4 py-8 md:p-8"
       >
         <header className="w-full flex flex-col md:flex-row justify-between items-center pb-4">
           <Logo />
