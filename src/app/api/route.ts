@@ -1,6 +1,6 @@
 import { FCN_WEB_API } from "@/app/lib/constants";
 import { getServerSession } from "next-auth";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../lib/auth";
 
 export async function GET() {
@@ -22,8 +22,8 @@ export async function GET() {
   return Response.json(results, { status: res.status });
 }
 
-export async function POST(request: Request) {
-  const ip = request.headers.get("x-forwarded-for");
+export async function POST(request: NextRequest) {
+  const ip = request.headers.get("x-forwarded-for") || request.ip;
   const payload = await request.json();
   const payloadWithIP = {
     ...payload,

@@ -212,6 +212,15 @@ export default function Page() {
             >
               Meine Auswahl speichern
             </Button>
+            <p className="small muted">
+              Wenn Du über dieses Formular Deine Einwilligung erteilst, erfassen
+              und speichern wir Deine IP-Adresse zusammen mit dem Zeitpunkt und
+              den Details Deiner Einwilligungen. Diese Informationen werden
+              ausschließlich verwendet, um zu überprüfen und nachzuweisen, dass
+              Deine Einwilligung ordnungsgemäß gemäß der DSGVO (Artikel 7)
+              eingeholt wurde. Deine IP-Adresse wird sicher gespeichert und nach
+              2 Jahren (oder sobald Du Deine Einwilligung widerrufst) gelöscht.
+            </p>
           </>
         );
     }
