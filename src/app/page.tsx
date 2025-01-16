@@ -1,16 +1,19 @@
 "use client";
-import { Button, Checkbox, Paper } from "@mantine/core";
-import { IconDeviceFloppy, IconLoader2 } from "@tabler/icons-react";
+import { Button, Checkbox, Paper, TextInput } from "@mantine/core";
+import { IconAt, IconDeviceFloppy, IconLoader2 } from "@tabler/icons-react";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Logo from "./components/logo";
 import { SURVEY } from "./lib/constants";
+import { Payload } from "./lib/interfaces";
 
 export default function Page() {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
+  const qr = searchParams.get("src") === "qr";
 
   const [status, setStatus] = useState("loading");
+  const [email, setEmail] = useState("");
   const [id, setId] = useState(false);
   const [invitation, setInvitation] = useState(false);
   const [magazin, setMagazin] = useState(false);
@@ -36,19 +39,21 @@ export default function Page() {
   }, [token]);
 
   const handleSubmit = () => {
+    const payload: Payload = {
+      token,
+      survey: SURVEY,
+      ausweis: id,
+      jhv: invitation,
+      magazin: magazin,
+    };
+
+    if (qr) {
+      payload.email = email;
+    }
+
     fetch("/api", {
       method: "POST",
-      body: JSON.stringify(
-        {
-          token,
-          survey: SURVEY,
-          ausweis: id,
-          jhv: invitation,
-          magazin: magazin,
-        },
-        null,
-        2
-      ),
+      body: JSON.stringify(payload),
     })
       .then((res) => res.status)
       .then((data) => {
@@ -140,9 +145,20 @@ export default function Page() {
                 e.preventDefault();
               }}
             >
+              {qr && (
+                <TextInput
+                  className="pb-4"
+                  size="lg"
+                  label="Bitte gib Deine Mailadresse an, über die wir Dich erreichen können."
+                  placeholder="E-Mail"
+                  leftSection={<IconAt size={20} />}
+                  value={email}
+                  onChange={(e) => setEmail(e.currentTarget.value)}
+                />
+              )}
               <Checkbox
                 label="Ich möchte den Mitgliedsausweis digital erhalten."
-                description="Wenn Du diesen Haken setzt, wird dir der digitale Mitgliedsausweis als Link per E-Mail zugeschickt. Diesen kannst Du anschließend mit nur einem Klick in deiner Mobile-Wallet speichern. Somit hast Du Deinen Mitgliedsausweis auf deinem Smartphone immer griffbereit. In diesem Fall erhältst Du keinen gedruckten Mitgliedsausweis."
+                description="Wenn Du diesen Haken setzt, wird Dir der digitale Mitgliedsausweis als Link per E-Mail zugeschickt. Diesen kannst Du anschließend mit nur einem Klick in deiner Mobile-Wallet speichern. Somit hast Du Deinen Mitgliedsausweis auf deinem Smartphone immer griffbereit. In diesem Fall erhältst Du keinen gedruckten Mitgliedsausweis."
                 size="lg"
                 checked={id}
                 onChange={(e) => setId(e.currentTarget.checked)}
@@ -171,10 +187,11 @@ export default function Page() {
             </p>
             <Button
               type="submit"
-              size="md"
+              size="lg"
               fullWidth
               leftSection={<IconDeviceFloppy size={20} />}
               onClick={() => handleSubmit()}
+              disabled={qr && !/\S+@\S+\.\S+/.test(email)}
             >
               Meine Auswahl speichern
             </Button>

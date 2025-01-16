@@ -14,3 +14,12 @@ export interface Survey {
   jhv: boolean;
   magazin: boolean;
 }
+
+export interface Payload {
+  token: string | null;
+  email?: string | null;
+  survey: string;
+  ausweis: boolean;
+  jhv: boolean;
+  magazin: boolean;
+}

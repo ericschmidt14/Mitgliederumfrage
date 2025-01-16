@@ -6,10 +6,11 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import Footer from "./components/footer";
 import "./globals.css";
+import { SURVEY } from "./lib/constants";
 
 export const metadata: Metadata = {
-  title: "1. FCN Mitgliederumfrage 2025 Q1",
-  description: "",
+  title: "1. FCN Mitgliederumfrage",
+  description: `Umfrage ${SURVEY}`,
 };
 
 const theme = createTheme({
