@@ -1,6 +1,10 @@
 "use client";
-import { Button, Checkbox, Paper, TextInput } from "@mantine/core";
-import { IconAt, IconDeviceFloppy } from "@tabler/icons-react";
+import { Button, Checkbox, Paper, TextInput, Tooltip } from "@mantine/core";
+import {
+  IconAt,
+  IconDeviceFloppy,
+  IconExclamationCircle,
+} from "@tabler/icons-react";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Loader from "./components/loader";
@@ -72,6 +76,10 @@ export default function Page() {
         console.error(error);
         setStatus("error");
       });
+  };
+
+  const isValidMail = (mail: string) => {
+    return /\S+@\S+\.\S+/.test(mail);
   };
 
   const contact = () => {
@@ -149,6 +157,18 @@ export default function Page() {
                   label="Bitte gib Deine Mailadresse an, über die wir Dich erreichen können."
                   placeholder="E-Mail"
                   leftSection={<IconAt size={20} />}
+                  rightSection={
+                    !isValidMail(email) && (
+                      <Tooltip
+                        label="Ungültige Mail-Adresse"
+                        position="left"
+                        withArrow
+                        color="dark"
+                      >
+                        <IconExclamationCircle size={20} color="#aa1124" />
+                      </Tooltip>
+                    )
+                  }
                   value={email}
                   onChange={(e) => setEmail(e.currentTarget.value)}
                 />
@@ -188,7 +208,7 @@ export default function Page() {
               fullWidth
               leftSection={<IconDeviceFloppy size={20} />}
               onClick={() => handleSubmit()}
-              disabled={qr && !/\S+@\S+\.\S+/.test(email)}
+              disabled={qr && !isValidMail(email)}
             >
               Meine Auswahl speichern
             </Button>

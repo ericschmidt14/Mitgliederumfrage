@@ -1,33 +1,19 @@
 "use client";
 import { DonutChart } from "@mantine/charts";
-import {
-  ActionIcon,
-  Button,
-  Checkbox,
-  CopyButton,
-  Paper,
-  Popover,
-  Table,
-  TextInput,
-} from "@mantine/core";
-import {
-  IconCheck,
-  IconClipboard,
-  IconSearch,
-  IconTrash,
-} from "@tabler/icons-react";
+import { Paper, Table, TextInput } from "@mantine/core";
+import { IconSearch } from "@tabler/icons-react";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Header from "../components/header";
 import Loader from "../components/loader";
 import Login from "../components/login";
+import Row from "../components/row";
 import { Result } from "../lib/interfaces";
 
 export default function Page() {
   const { data: session, status } = useSession();
   const [results, setResults] = useState<Result[]>([]);
   const [search, setSearch] = useState<string>("");
-  const [opened, setOpened] = useState(false);
 
   const fetchData = () => {
     if (session) {
@@ -87,84 +73,7 @@ export default function Page() {
       .reverse();
 
   const rows = filteredResults.map((r) => {
-    return (
-      <Table.Tr key={r.token}>
-        <Table.Td>{r.MitgliedID}</Table.Td>
-        <Table.Td>
-          {r.Vorname} {r.Nachname}
-        </Table.Td>
-        <Table.Td>{r.Email}</Table.Td>
-        {[r.survey.ausweis, r.survey.jhv, r.survey.magazin].map((s, i) => (
-          <Table.Td key={i}>
-            <Checkbox checked={s} readOnly />
-          </Table.Td>
-        ))}
-        <Table.Td>{r.token}</Table.Td>
-        <Table.Td className="flex justify-end">
-          <ActionIcon.Group>
-            <CopyButton
-              value={
-                typeof window !== "undefined"
-                  ? `${window.location.origin}?token=${r.token}`
-                  : r.token
-              }
-            >
-              {({ copied, copy }) => (
-                <ActionIcon color="dark" onClick={copy}>
-                  {copied ? (
-                    <IconCheck size={16} />
-                  ) : (
-                    <IconClipboard size={16} />
-                  )}
-                </ActionIcon>
-              )}
-            </CopyButton>
-            <Popover
-              opened={opened}
-              onChange={setOpened}
-              withArrow
-              position="left"
-            >
-              <Popover.Target>
-                <ActionIcon
-                  color="red"
-                  variant="light"
-                  onClick={() => setOpened((o) => !o)}
-                >
-                  <IconTrash size={16} />
-                </ActionIcon>
-              </Popover.Target>
-              <Popover.Dropdown>
-                <div className="flex items-baseline gap-4">
-                  <p>Datensatz endgültig löschen?</p>
-                  <Button
-                    onClick={() =>
-                      fetch(`/api/token/${r.token}`, {
-                        method: "DELETE",
-                      })
-                        .then((res) => res.text())
-                        .then(() => {
-                          setOpened(false);
-                          fetchData();
-                        })
-                        .catch((error) => console.error(error))
-                    }
-                  >
-                    Ja
-                  </Button>
-                  <Button
-                    variant="transparent"
-                    onClick={() => setOpened(false)}
-                  >
-                    Nein
-                  </Button>
-                </div>
-              </Popover.Dropdown>
-            </Popover>
-          </ActionIcon.Group>
-        </Table.Td>
-      </Table.Tr>
-    );
+    return <Row key={r.token} data={r} fetchData={fetchData} />;
   });
 
   const table = (
