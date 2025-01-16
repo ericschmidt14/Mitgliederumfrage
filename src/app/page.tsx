@@ -209,7 +209,7 @@ export default function Page() {
         bg="rgba(0, 0, 0, 0.5)"
         className="flex flex-col items-start gap-8"
       >
-        <header className="w-full flex justify-between items-center pb-4">
+        <header className="w-full flex flex-col md:flex-row justify-between items-center pb-4">
           <Logo />
           <p className="small muted">{SURVEY}</p>
         </header>
