@@ -23,15 +23,28 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-  const res = await fetch(FCN_WEB_API, {
-    method: "POST",
-    headers: {
-      Accept: "*/*",
-      "Content-Type": "application/json; charset=UTF-8",
-    },
-    body: JSON.stringify(await request.json()),
-  });
-  const text = await res.text();
+  const ip = request.headers.get("x-forwarded-for");
 
-  return Response.json(text, { status: res.status });
+  const payload = await request.json();
+
+  const payloadWithIP = {
+    ...payload,
+    ip,
+  };
+
+  console.log(JSON.stringify(payloadWithIP));
+
+  return Response.json({});
+
+  // const res = await fetch(FCN_WEB_API, {
+  //   method: "POST",
+  //   headers: {
+  //     Accept: "*/*",
+  //     "Content-Type": "application/json; charset=UTF-8",
+  //   },
+  //   body: JSON.stringify(payloadWithIP),
+  // });
+  // const text = await res.text();
+
+  // return Response.json(text, { status: res.status });
 }
