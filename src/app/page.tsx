@@ -1,8 +1,9 @@
 "use client";
 import { Button, Checkbox, Paper, TextInput } from "@mantine/core";
-import { IconAt, IconDeviceFloppy, IconLoader2 } from "@tabler/icons-react";
+import { IconAt, IconDeviceFloppy } from "@tabler/icons-react";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import Loader from "./components/loader";
 import Logo from "./components/logo";
 import { SURVEY } from "./lib/constants";
 import { Payload } from "./lib/interfaces";
@@ -86,11 +87,7 @@ export default function Page() {
   const renderContent = () => {
     switch (status) {
       case "loading":
-        return (
-          <div className="w-full flex justify-center">
-            <IconLoader2 size={48} className="animate-spin" />
-          </div>
-        );
+        return <Loader />;
 
       case "error":
         return (
