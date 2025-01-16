@@ -1,10 +1,25 @@
 "use client";
 import { DonutChart } from "@mantine/charts";
-import { Checkbox, Paper, Table, TextInput } from "@mantine/core";
-import { IconSearch } from "@tabler/icons-react";
+import {
+  ActionIcon,
+  Button,
+  Checkbox,
+  CopyButton,
+  Paper,
+  Popover,
+  Table,
+  TextInput,
+} from "@mantine/core";
+import {
+  IconCheck,
+  IconClipboard,
+  IconSearch,
+  IconTrash,
+} from "@tabler/icons-react";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Header from "../components/header";
+import Loader from "../components/loader";
 import Login from "../components/login";
 import { Result } from "../lib/interfaces";
 
@@ -12,6 +27,7 @@ export default function Page() {
   const { data: session, status } = useSession();
   const [results, setResults] = useState<Result[]>([]);
   const [search, setSearch] = useState<string>("");
+  const [opened, setOpened] = useState(false);
 
   useEffect(() => {
     if (session) {
@@ -21,12 +37,16 @@ export default function Page() {
         .then((res) => res.json())
         .then((data) => {
           setResults(data);
+        })
+        .catch((error) => {
+          setResults([]);
+          console.error(error);
         });
     }
   }, [session]);
 
   if (status === "loading") {
-    return <></>;
+    return <Loader />;
   }
 
   if (!session) {
@@ -76,6 +96,66 @@ export default function Page() {
           </Table.Td>
         ))}
         <Table.Td>{r.token}</Table.Td>
+        <Table.Td className="flex justify-end">
+          <ActionIcon.Group>
+            <CopyButton
+              value={
+                typeof window !== "undefined"
+                  ? `${window.location.origin}?token=${r.token}`
+                  : r.token
+              }
+            >
+              {({ copied, copy }) => (
+                <ActionIcon color="dark" onClick={copy}>
+                  {copied ? (
+                    <IconCheck size={16} />
+                  ) : (
+                    <IconClipboard size={16} />
+                  )}
+                </ActionIcon>
+              )}
+            </CopyButton>
+            <Popover
+              opened={opened}
+              onChange={setOpened}
+              withArrow
+              position="left"
+            >
+              <Popover.Target>
+                <ActionIcon
+                  color="red"
+                  variant="light"
+                  onClick={() => setOpened((o) => !o)}
+                >
+                  <IconTrash size={16} />
+                </ActionIcon>
+              </Popover.Target>
+              <Popover.Dropdown>
+                <div className="flex items-baseline gap-4">
+                  <p>Datensatz endgültig löschen?</p>
+                  <Button
+                    onClick={() =>
+                      fetch(`/api/token/${r.token}`, {
+                        method: "DELETE",
+                      })
+                        .then((res) => res.text())
+                        .then((data) => console.log(data))
+                        .catch((error) => console.error(error))
+                    }
+                  >
+                    Ja
+                  </Button>
+                  <Button
+                    variant="transparent"
+                    onClick={() => setOpened(false)}
+                  >
+                    Nein
+                  </Button>
+                </div>
+              </Popover.Dropdown>
+            </Popover>
+          </ActionIcon.Group>
+        </Table.Td>
       </Table.Tr>
     );
   });
@@ -91,6 +171,7 @@ export default function Page() {
           <Table.Th>JHV</Table.Th>
           <Table.Th>Magazin</Table.Th>
           <Table.Th>Token</Table.Th>
+          <Table.Th />
         </Table.Tr>
       </Table.Thead>
       <Table.Tbody>{rows}</Table.Tbody>
@@ -149,7 +230,11 @@ export default function Page() {
             },
           }}
         />
-        {table}
+        {results.length > 0 ? (
+          table
+        ) : (
+          <p className="text-center muted p-8">Keine Ergebnisse vorhanden.</p>
+        )}
       </Paper>
     </>
   );

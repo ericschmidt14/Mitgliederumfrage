@@ -16,3 +16,18 @@ export async function GET(
 
   return NextResponse.json(data, { status: res.status });
 }
+
+export async function DELETE(
+  request: Request,
+  { params }: { params: { token: string } }
+) {
+  const res = await fetch(`${FCN_WEB_API}/${params.token}`, {
+    method: "DELETE",
+    headers: {
+      Accept: "*/*",
+    },
+  });
+  const status = res.status;
+
+  return Response.json(status);
+}
