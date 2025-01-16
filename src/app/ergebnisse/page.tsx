@@ -29,7 +29,7 @@ export default function Page() {
   const [search, setSearch] = useState<string>("");
   const [opened, setOpened] = useState(false);
 
-  useEffect(() => {
+  const fetchData = () => {
     if (session) {
       fetch("/api", {
         method: "GET",
@@ -43,6 +43,10 @@ export default function Page() {
           console.error(error);
         });
     }
+  };
+
+  useEffect(() => {
+    fetchData();
   }, [session]);
 
   if (status === "loading") {
@@ -139,7 +143,10 @@ export default function Page() {
                         method: "DELETE",
                       })
                         .then((res) => res.text())
-                        .then((data) => console.log(data))
+                        .then(() => {
+                          setOpened(false);
+                          fetchData();
+                        })
                         .catch((error) => console.error(error))
                     }
                   >
