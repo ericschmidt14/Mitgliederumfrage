@@ -1,6 +1,6 @@
 "use client";
 import { DonutChart } from "@mantine/charts";
-import { Paper, Table, TextInput } from "@mantine/core";
+import { Pagination, Paper, Table, TextInput } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
@@ -13,7 +13,10 @@ import { Result } from "../lib/interfaces";
 export default function Page() {
   const { data: session, status } = useSession();
   const [results, setResults] = useState<Result[]>([]);
+  const [page, setPage] = useState(1);
   const [search, setSearch] = useState<string>("");
+
+  const pageLimit = 25;
 
   const fetchData = () => {
     if (session) {
@@ -72,7 +75,13 @@ export default function Page() {
       })
       .reverse();
 
-  const rows = filteredResults.map((r) => {
+  const pageSize = pageLimit ? +pageLimit : 25;
+  const startIndex = (page - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const currentPageData = filteredResults.slice(startIndex, endIndex);
+  const totalPages = Math.ceil(filteredResults.length / pageSize);
+
+  const rows = currentPageData.map((r) => {
     return <Row key={r.token} data={r} fetchData={fetchData} />;
   });
 
@@ -151,6 +160,12 @@ export default function Page() {
         ) : (
           <p className="text-center muted p-8">Keine Ergebnisse vorhanden.</p>
         )}
+        <Pagination
+          value={page}
+          onChange={setPage}
+          total={totalPages}
+          className="flex justify-center"
+        />
       </Paper>
     </>
   );
