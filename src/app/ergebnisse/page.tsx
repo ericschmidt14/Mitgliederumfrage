@@ -68,7 +68,7 @@ export default function Page() {
         const keywords = search.toLowerCase().split(" ");
 
         return keywords.every((keyword) =>
-          [r.Vorname, r.Nachname, r.MitgliedID.toString(), r.Email].some(
+          [r.Vorname, r.Nachname].some(
             (value) => value.toLowerCase().includes(keyword)
           )
         );
